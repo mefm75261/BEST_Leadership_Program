@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BEST Leadership Program</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.44.0/tabler-icons.min.css">
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+
+body {
+  font-family: Arial, sans-serif;
+  min-height: 100dvh;
+  color: #e8f4f0;
+  position: relative;
+  background:
+    radial-gradient(ellipse at top left, #0f3a3a 0%, transparent 55%),
+    radial-gradient(ellipse at bottom right, #0a2a20 0%, transparent 55%),
+    linear-gradient(160deg, #071c1e 0%, #0f2a2d 40%, #071a18 100%);
+  background-attachment: fixed;
+}
+
+/* ── FONDO DEGRADADO — eliminado, ahora va en body directamente ── */
+body::before { display: none; }
+
+/* ── IMAGEN DE FONDO SEMITRANSPARENTE ── */
+/* Reemplaza 'img/background.png' con tu imagen */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url('gifts/fondo menu 2.gif');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  opacity: 0.08;
+  z-index: 1;
+  pointer-events: none;
+  will-change: transform; /* ← mejora rendimiento en móvil */
+}
+
+/* Todo el contenido va sobre los fondos */
+#pg-menu, #pg-module {
+  position: relative;
+  z-index: 2;
+}
+
+/* ── HEADER ─────────────────────────── */
+.header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  padding: 20px 40px 0 40px;
+}
+.header h1 { font-size: 42px; font-weight: 700; color: #e8f4f0; }
+.subtitle   { font-size: 18px; color: #4db89a; font-style: italic; margin-top: 3px; }
+
+/* Logo más grande */
+.logo { width: 52px; opacity: 1; flex-shrink: 0; }
+
+.header-left { display: flex; align-items: center; gap: 14px; }
+.menu-btn {
+  background: rgba(255,255,255,0.07);
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 6px; padding: 5px 13px;
+  color: #e8f4f0; font-size: 25px; font-weight: 600; letter-spacing: 1.5px;
+  cursor: pointer; display: flex; align-items: center; gap: 7px;
+  transition: background .2s; white-space: nowrap;
+}
+.menu-btn:hover { background: rgba(255,255,255,0.13); }
+.menu-btn .arrow { color: #4db89a; font-size: 16px; }
+
+/* ── HEADER DERECHO con logo + badge ── */
+.header-right {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 20px;
+}
+
+/* ── STAGE BADGE — debajo del logo ─── */
+.stage-badge {
+  background: rgba(20,50,55,.88);
+  border: 1px solid #4db89a; border-radius: 8px;
+  padding: 5px 5px; font-size: 10px;
+  color: #4db89a; font-weight: 700; letter-spacing: 1px;
+  display: none;
+  white-space: nowrap;
+}
+
+/* ── MENU PAGE ───────────────────────── */
+.page { padding: 0 40px 16px; }
+.stage-section { margin-top: 10px; }
+.stage-label {
+  font-size: 13px; font-weight: 700; color: #4db89a;
+  letter-spacing: 3px; margin-bottom: 9px;
+  display: flex; align-items: center; gap: 10px;
+}
+.stage-num {
+  background: #4db89a; color: #0f2a2a;
+  font-size: 15px; font-weight: 700;
+  border-radius: 5px; padding: 2px 9px;
+}
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.grid-4 { display: grid; grid-template-columns: repeat(4,1fr); gap: 8px; }
+
+/* ── MODULE CARD (menu) ─────────────── */
+.mod-card {
+  background: rgba(20,44,48,0.55);
+  border: none;
+  border-top: 3px solid rgba(77,184,154,0.45);
+  border-radius: 0 0 10px 10px;
+  padding: 20px 14px 16px;
+  cursor: pointer; text-align: center;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  gap: 10px; width: 100%; min-height: 105px;
+  transition: transform .2s ease, background .2s ease,
+              box-shadow .2s ease, border-color .2s ease;
+  backdrop-filter: blur(4px);
+  overflow: hidden;
+}
+
+@keyframes ripple-expand {
+  0%   { transform: translate(-50%,-50%) scale(0); opacity: 0.6; }
+  100% { transform: translate(-50%,-50%) scale(4); opacity: 0; }
+}
+
+.mod-card .drop-light {
+  position: absolute;
+  width: 250px; height: 250px;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    rgba(77,184,154,0.40) 0%,
+    rgba(77,184,154,0.15) 50%,
+    transparent 50%
+  );
+  left: 50%; top: 50%;
+  transform: translate(-100%,-100%) scale(0);
+  pointer-events: none;
+  z-index: 2;
+  opacity: 0;
+}
+
+.mod-card .drop-light.rippling {
+  animation: ripple-expand 0.9s ease-out forwards;
+}
+
+.mod-card i {
+  font-size: 45px;
+  color: rgba(77,184,154,0.55);
+  transition: color .2s ease;
+}
+.mod-card .mod-title {
+  font-size: 15px; font-weight: 600;
+  color: rgba(232,244,240,0.55);
+  line-height: 1.35;
+  transition: color .2s ease;
+}
+.mod-card:hover {
+  transform: translateY(-4px);
+  background: rgba(26,58,64,0.75);
+  border-color: #4db89a;
+  box-shadow: 0 8px 28px rgba(0,0,0,.45);
+}
+.mod-card:hover i { color: #4db89a; }
+.mod-card:hover .mod-title { color: #e8f4f0; }
+.mod-card:active { transform: scale(0.97); }
+
+/* ── MODULE PAGE ─────────────────────── */
+.mod-header {
+  margin-top: 8px;
+  display: flex; align-items: center; gap: 14px;
+  margin-bottom: 0px;
+}
+.mod-header .icon-box {
+  width: 48px; height: 48px;
+  background: #163030; border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+}
+.mod-header .icon-box i { font-size: 24px; color: #4db89a; }
+.mod-header h2 { font-size: 21px; font-weight: 700; }
+.mod-subdesc { font-size: 12px; color: #6ab5a0; margin-bottom: 24px; }
+
+/* ── RESOURCE CARDS ─────────────────── */
+.res-grid {
+  display: grid; grid-template-columns: repeat(4,1fr); gap: 14px;
+}
+.res-card {
+  border-radius: 12px; overflow: hidden; cursor: pointer;
+  border: 1px solid #2d4f52; background: #1a3035;
+  display: flex; flex-direction: column;
+  aspect-ratio: 9/14;
+  transition: transform .22s ease, box-shadow .22s ease;
+}
+.res-card:hover {
+  transform: perspective(900px) translateZ(20px) translateY(-5px);
+  box-shadow: 0 18px 44px rgba(0,0,0,.55);
+}
+.res-card:active {
+  transform: perspective(900px) translateZ(-8px) scale(0.96);
+  box-shadow: 0 4px 12px rgba(0,0,0,.4);
+}
+.res-card .media {
+  flex: 1; overflow: hidden;
+  display: flex; align-items: center; justify-content: center;
+}
+.res-card .media img {
+  width:100%; height:100%; object-fit:cover; display:block;
+  filter: brightness(0.65);
+  transition: filter .2s ease;
+}
+.res-card:hover .media img { filter: brightness(0.85); }
+.placeholder {
+  width:100%; height:100%;
+  background: linear-gradient(160deg,#1a3540,#0f2530);
+  display:flex; align-items:center; justify-content:center;
+  flex-direction:column; gap:8px;
+}
+.placeholder i { font-size: 42px; color: #4db89a; opacity: .3; }
+.res-label {
+  background: rgba(8,25,30,.88); padding: 11px; text-align: center;
+}
+.res-label span {
+  font-size: 10px; font-weight: 700; color: #4db89a;
+  letter-spacing: 2px; border: 1px solid #4db89a;
+  border-radius: 20px; padding: 4px 16px; display: inline-block;
+}
+
+.footer { font-size: 13px; color: rgba(77,184,154,0.5); padding: 0px 40px 0; }
+.hidden { display: none !important; }
+
+/* ── RESPONSIVE MÓVIL ─────────────────────── */
+@media (max-width: 768px) {
+
+  .header { padding: 18px 16px 0 16px; margin-bottom: 16px; }
+  .header h1 { font-size: 20px; }
+  .subtitle { font-size: 11px; }
+  .logo { width: 52px; }
+  .menu-btn { font-size: 10px; padding: 4px 8px; }
+  .page { padding: 0 16px 24px; }
+  .stage-section { margin-top: 12px; }
+  .stage-label { font-size: 9px; letter-spacing: 1px; }
+  .stage-num { font-size: 11px; }
+
+  /* Todos los grids a 1 columna */
+  .grid-2 { grid-template-columns: 1fr; gap: 6px; }
+  .grid-4 { grid-template-columns: 1fr 1fr; gap: 6px; }
+
+  /* Tarjetas del menú */
+  .mod-card { min-height: 80px; padding: 14px 10px 12px; gap: 8px; }
+  .mod-card i { font-size: 24px; }
+  .mod-card .mod-title { font-size: 11px; }
+
+  /* Página de módulo */
+  .mod-header { margin-top: 10px; gap: 10px; }
+  .mod-header h2 { font-size: 16px; }
+  .mod-subdesc { font-size: 11px; margin-bottom: 14px; }
+
+  /* Resource cards: 2x2 en móvil */
+  .res-grid { grid-template-columns: 1fr 1fr; gap: 8px; }
+  .res-label span { font-size: 8px; padding: 3px 10px; letter-spacing: 1px; }
+
+  .footer { font-size: 9px; padding: 12px 16px 0; }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+  .grid-4 { grid-template-columns: 1fr 1fr; gap: 8px; }
+  .res-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
+}
+
+</style>
+</head>
+<body>
+
+<!-- ══ MENU ══════════════════════════════════════════ -->
+<div id="pg-menu">
+  <div class="header" style="flex-direction:column; align-items:center; text-align:center; padding-bottom:8px;">
+    <img class="logo" src="img/best-logo.png" alt="BEST" onerror="this.style.display='none'" style="margin-bottom:10px;">
+    <h1 style="font-size:36px;">BEST Leadership Program</h1>
+    <p class="subtitle" style="font-size:13px; margin-top:6px;">Building the leadership behaviors that make operational excellence inevitable</p>
+    <div style="width:60px; height:2px; background:#4db89a; border-radius:2px; margin-top:12px;"></div>
+  </div>
+
+  <div class="page">
+    <div class="stage-section">
+      <div class="stage-label"><span class="stage-num">1</span> FOUNDATION — SAIL PROGRAM ALIGNMENT</div>
+      <div class="grid-2">
+        <button class="mod-card" onclick="openMod('scarf')">
+          <i class="ti ti-brain" aria-hidden="true"></i>
+          <div class="mod-title">SCARF Model</div>
+        </button>
+        <button class="mod-card" onclick="openMod('selfregulation')">
+          <i class="ti ti-heart-rate-monitor" aria-hidden="true"></i>
+          <div class="mod-title">Self-Regulation & Resilience</div>
+        </button>
+      </div>
+    </div>
+
+    <div class="stage-section">
+      <div class="stage-label"><span class="stage-num">2</span> LEADING SELF</div>
+      <div class="grid-2">
+        <button class="mod-card" onclick="openMod('leadershipstyles')">
+          <i class="ti ti-user-circle" aria-hidden="true"></i>
+          <div class="mod-title">Leadership Styles</div>
+        </button>
+        <button class="mod-card" onclick="openMod('decisionmaking')">
+          <i class="ti ti-scale" aria-hidden="true"></i>
+          <div class="mod-title">Decision-Making & Bias</div>
+        </button>
+      </div>
+    </div>
+
+    <div class="stage-section">
+      <div class="stage-label"><span class="stage-num">3</span> LEADING PEOPLE</div>
+      <div class="grid-4">
+        <button class="mod-card" onclick="openMod('psychsafety')">
+          <i class="ti ti-shield-check" aria-hidden="true"></i>
+          <div class="mod-title">Psychological Safety</div>
+        </button>
+        <button class="mod-card" onclick="openMod('coaching')">
+          <i class="ti ti-messages" aria-hidden="true"></i>
+          <div class="mod-title">Coaching (Kata)</div>
+        </button>
+        <button class="mod-card" onclick="openMod('feedback')">
+          <i class="ti ti-message-circle" aria-hidden="true"></i>
+          <div class="mod-title">Feedback & Hard Talks</div>
+        </button>
+        <button class="mod-card" onclick="openMod('motivation')">
+          <i class="ti ti-star" aria-hidden="true"></i>
+          <div class="mod-title">Motivation & Recognition</div>
+        </button>
+      </div>
+    </div>
+
+    <div class="stage-section">
+      <div class="stage-label"><span class="stage-num">4</span> LEADING CHANGE & IMPROVEMENT</div>
+      <div class="grid-4">
+        <button class="mod-card" onclick="openMod('changemgmt')">
+          <i class="ti ti-refresh" aria-hidden="true"></i>
+          <div class="mod-title">Change Mgmt · COP</div>
+        </button>
+        <button class="mod-card" onclick="openMod('hoshin')">
+          <i class="ti ti-circle-dot" aria-hidden="true"></i>
+          <div class="mod-title">Hoshin Kanri</div>
+        </button>
+        <button class="mod-card" onclick="openMod('gemba')">
+          <i class="ti ti-walk" aria-hidden="true"></i>
+          <div class="mod-title">Gemba & Leader Std Work</div>
+        </button>
+        <button class="mod-card" onclick="openMod('improvkata')">
+          <i class="ti ti-chart-line" aria-hidden="true"></i>
+          <div class="mod-title">Improvement Kata</div>
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="footer">Hanseatic Global Terminals · BEST Leadership Program</div>
+</div>
+
+
+<!-- ══ MODULE PAGE ════════════════════════════════════ -->
+<div id="pg-module" class="hidden">
+  <div class="header">
+    <div class="header-left">
+      <button class="menu-btn" onclick="goBack()">
+        <span class="arrow">&#9654;</span> MENU
+      </button>
+      <div>
+        <h1>BEST Leadership Program</h1>
+        <p class="subtitle">Building the leadership behaviors that make operational excellence inevitable</p>
+      </div>
+    </div>
+    <!-- Logo grande + badge debajo -->
+    <div style="display:flex; align-items:center; gap:12px; flex-shrink:0;">
+      <div class="stage-badge" id="badge"></div>
+      <img class="logo" src="img/best-logo.png" alt="BEST" onerror="this.style.display='none'">
+    </div>
+  </div>
+
+  <div class="page">
+    <div class="mod-header">
+      <div class="icon-box"><i id="m-icon" class="ti ti-brain" aria-hidden="true"></i></div>
+      <h2 id="m-title">Module</h2>
+    </div>
+    <p class="mod-subdesc" id="m-desc">Description</p>
+
+    <div class="res-grid">
+      <div class="res-card" onclick="goLink('content')">
+        <div class="media" id="rm-content">
+          <div class="placeholder"><i class="ti ti-file-text" aria-hidden="true"></i></div>
+        </div>
+        <div class="res-label"><span>CONTENT</span></div>
+      </div>
+      <div class="res-card" onclick="goLink('video')">
+        <div class="media" id="rm-video">
+          <div class="placeholder"><i class="ti ti-player-play" aria-hidden="true"></i></div>
+        </div>
+        <div class="res-label"><span>VIDEO</span></div>
+      </div>
+      <div class="res-card" onclick="goLink('form')">
+        <div class="media" id="rm-form">
+          <div class="placeholder"><i class="ti ti-clipboard-list" aria-hidden="true"></i></div>
+        </div>
+        <div class="res-label"><span>FORM</span></div>
+      </div>
+      <div class="res-card" onclick="goLink('assessment')">
+        <div class="media" id="rm-assessment">
+          <div class="placeholder"><i class="ti ti-checkbox" aria-hidden="true"></i></div>
+        </div>
+        <div class="res-label"><span>ASSESSMENT</span></div>
+      </div>
+    </div>
+  </div>
+  <div class="footer">Hanseatic Global Terminals · BEST Leadership Program</div>
+</div>
+
+<script>
+const DATA = {
+  scarf: {
+    iconClass:'ti-brain', title:'SCARF Model',
+    desc:'A shared language for the brain\'s threat response — faster adoption of BEST routines, less resistance.',
+    stage:'1 · FOUNDATION',
+    content:'', video:'', form:'',
+    assessment:'https://forms.office.com/Pages/ResponsePage.aspx?id=0dMQwt6XIUmUVn7rrIW0tpV5gZNq1vxBlP4c7iQQHuhUMzZBTFlWNjRYN0pXTlM0TjAxVlJTOVI2Ri4u',
+    gifContent:'gifts/GIF CONTENT.gif', gifVideo:'gifts/VDEO GIF.gif',
+    gifForm:'', gifAssessment:'gifts/Evaluation Survey.gif',
+  },
+  selfregulation: {
+    iconClass:'ti-heart-rate-monitor', title:'Self-Regulation & Resilience',
+    desc:'Protects routines under operational pressure: steadier decisions, lower burnout and turnover.',
+    stage:'1 · FOUNDATION',
+    content:'', video:'', form:'',
+    assessment:'https://forms.office.com/Pages/ResponsePage.aspx?id=0dMQwt6XIUmUVn7rrIW0tpV5gZNq1vxBlP4c7iQQHuhUMzZBTFlWNjRYN0pXTlM0TjAxVlJTOVI2Ri4u',
+    gifContent:'gifts/GIF CONTENT.gif', gifVideo:'gifts/VDEO GIF.gif',
+    gifForm:'', gifAssessment:'gifts/Evaluation Survey.gif',
+  },
+  leadershipstyles: {
+    iconClass:'ti-user-circle', title:'Leadership Styles',
+    desc:'Adaptive leadership that flexes to the situation, reinforcing culture across diverse terminals.',
+    stage:'2 · LEADING SELF',
+    content:'', video:'',
+    form:'https://forms.cloud.microsoft/Pages/ResponsePage.aspx?id=0dMQwt6XIUmUVn7rrIW0tpV5gZNq1vxBlP4c7iQQHuhURTFMSlBKNFYyNFhUNFFXVjlLT0Y3RERQMi4u',
+    assessment:'https://forms.office.com/Pages/ResponsePage.aspx?id=0dMQwt6XIUmUVn7rrIW0tpV5gZNq1vxBlP4c7iQQHuhUMzZBTFlWNjRYN0pXTlM0TjAxVlJTOVI2Ri4u',
+    gifContent:'gifts/GIF CONTENT.gif', gifVideo:'gifts/VDEO GIF.gif',
+    gifForm:'gifts/types of leadership.gif', gifAssessment:'gifts/Evaluation Survey.gif',
+  },
+  decisionmaking: {
+    iconClass:'ti-scale', title:'Decision-Making & Bias',
+    desc:'Sharpens judgment and cuts the costly, repeatable errors that bias drives under time pressure.',
+    stage:'2 · LEADING SELF',
+    content:'', video:'', form:'',
+    assessment:'https://forms.office.com/Pages/ResponsePage.aspx?id=0dMQwt6XIUmUVn7rrIW0tpV5gZNq1vxBlP4c7iQQHuhUMzZBTFlWNjRYN0pXTlM0TjAxVlJTOVI2Ri4u',
+    gifContent:'gifts/GIF CONTENT.gif', gifVideo:'gifts/VDEO GIF.gif',
+    gifForm:'', gifAssessment:'gifts/Evaluation Survey.gif',
+  },
+  psychsafety: {
+    iconClass:'ti-shield-check', title:'Psychological Safety',
+    desc:'Wires speaking-up behaviour so near-misses surface early — silence hides risk.',
+    stage:'3 · LEADING PEOPLE',
+    content:'', video:'',
+    form:'https://forms.cloud.microsoft/Pages/ResponsePage.aspx?id=0dMQwt6XIUmUVn7rrIW0tpV5gZNq1vxBlP4c7iQQHuhUM1dRNTZEN1lRR01GU1ZRQjFXS0pTOE5DMi4u',
+    assessment:'https://forms.office.com/Pages/ResponsePage.aspx?id=0dMQwt6XIUmUVn7rrIW0tpV5gZNq1vxBlP4c7iQQHuhUMzZBTFlWNjRYN0pXTlM0TjAxVlJTOVI2Ri4u',
+    gifContent:'gifts/GIF CONTENT.gif', gifVideo:'gifts/VDEO GIF.gif',
+    gifForm:'gifts/pshycosocial safety.gif', gifAssessment:'gifts/Evaluation Survey.gif',
+  },
+  coaching: {
+    iconClass:'ti-messages', title:'Coaching (Kata)',
+    desc:'Scales daily coaching to build in-house capability — asking develops, not telling.',
+    stage:'3 · LEADING PEOPLE',
+    content:'', video:'', form:'',
+    assessment:'https://forms.office.com/Pages/ResponsePage.aspx?id=0dMQwt6XIUmUVn7rrIW0tpV5gZNq1vxBlP4c7iQQHuhUMzZBTFlWNjRYN0pXTlM0TjAxVlJTOVI2Ri4u',
+    gifContent:'gifts/GIF CONTENT.gif', gifVideo:'gifts/VDEO GIF.gif',
+    gifForm:'', gifAssessment:'gifts/Evaluation Survey.gif',
+  },
+  feedback: {
+    iconClass:'ti-message-circle', title:'Feedback & Hard Talks',
+    desc:'Builds a candid culture where issues are caught early, before they become risk.',
+    stage:'3 · LEADING PEOPLE',
+    content:'', video:'', form:'',
+    assessment:'https://forms.office.com/Pages/ResponsePage.aspx?id=0dMQwt6XIUmUVn7rrIW0tpV5gZNq1vxBlP4c7iQQHuhUMzZBTFlWNjRYN0pXTlM0TjAxVlJTOVI2Ri4u',
+    gifContent:'gifts/GIF CONTENT.gif', gifVideo:'gifts/VDEO GIF.gif',
+    gifForm:'', gifAssessment:'gifts/Evaluation Survey.gif',
+  },
+  motivation: {
+    iconClass:'ti-star', title:'Motivation & Recognition',
+    desc:'Sustains the culture and lifts retention and effort — timing shapes behaviour.',
+    stage:'3 · LEADING PEOPLE',
+    content:'', video:'', form:'',
+    assessment:'https://forms.office.com/Pages/ResponsePage.aspx?id=0dMQwt6XIUmUVn7rrIW0tpV5gZNq1vxBlP4c7iQQHuhUMzZBTFlWNjRYN0pXTlM0TjAxVlJTOVI2Ri4u',
+    gifContent:'gifts/GIF CONTENT.gif', gifVideo:'gifts/VDEO GIF.gif',
+    gifForm:'', gifAssessment:'gifts/Evaluation Survey.gif',
+  },
+  changemgmt: {
+    iconClass:'ti-refresh', title:'Change Mgmt · COP',
+    desc:'Sets conditions for change to stick — a faster, safer BEST 2.0 rollout.',
+    stage:'4 · LEADING CHANGE & IMPROVEMENT',
+    content:'', video:'',
+    form:'https://forms.cloud.microsoft/Pages/ResponsePage.aspx?id=0dMQwt6XIUmUVn7rrIW0tpV5gZNq1vxBlP4c7iQQHuhURFhCUDM4UVdUSkkzNVMyNURBVlQ5WldXVi4u',
+    assessment:'https://forms.office.com/Pages/ResponsePage.aspx?id=0dMQwt6XIUmUVn7rrIW0tpV5gZNq1vxBlP4c7iQQHuhUMzZBTFlWNjRYN0pXTlM0TjAxVlJTOVI2Ri4u',
+    gifContent:'gifts/GIF CONTENT.gif', gifVideo:'gifts/VDEO GIF.gif',
+    gifForm:'gifts/Change Orientation Profile.gif', gifAssessment:'gifts/Evaluation Survey.gif',
+  },
+  hoshin: {
+    iconClass:'ti-circle-dot', title:'Hoshin Kanri',
+    desc:'Aligns the vital few and focuses effort where it counts — scatter dilutes results.',
+    stage:'4 · LEADING CHANGE & IMPROVEMENT',
+    content:'', video:'', form:'',
+    assessment:'https://forms.office.com/Pages/ResponsePage.aspx?id=0dMQwt6XIUmUVn7rrIW0tpV5gZNq1vxBlP4c7iQQHuhUMzZBTFlWNjRYN0pXTlM0TjAxVlJTOVI2Ri4u',
+    gifContent:'gifts/GIF CONTENT.gif', gifVideo:'gifts/VDEO GIF.gif',
+    gifForm:'', gifAssessment:'gifts/Evaluation Survey.gif',
+  },
+  gemba: {
+    iconClass:'ti-walk', title:'Gemba & Leader Std Work',
+    desc:'Protects front-line routines and solves problems where the work happens.',
+    stage:'4 · LEADING CHANGE & IMPROVEMENT',
+    content:'', video:'', form:'',
+    assessment:'https://forms.office.com/Pages/ResponsePage.aspx?id=0dMQwt6XIUmUVn7rrIW0tpV5gZNq1vxBlP4c7iQQHuhUMzZBTFlWNjRYN0pXTlM0TjAxVlJTOVI2Ri4u',
+    gifContent:'gifts/GIF CONTENT.gif', gifVideo:'gifts/VDEO GIF.gif',
+    gifForm:'', gifAssessment:'gifts/Evaluation Survey.gif',
+  },
+  improvkata: {
+    iconClass:'ti-chart-line', title:'Improvement Kata',
+    desc:'Scientific daily thinking that compounds gains — improvement as a daily habit.',
+    stage:'4 · LEADING CHANGE & IMPROVEMENT',
+    content:'', video:'', form:'',
+    assessment:'https://forms.office.com/Pages/ResponsePage.aspx?id=0dMQwt6XIUmUVn7rrIW0tpV5gZNq1vxBlP4c7iQQHuhUMzZBTFlWNjRYN0pXTlM0TjAxVlJTOVI2Ri4u',
+    gifContent:'gifts/GIF CONTENT.gif', gifVideo:'gifts/VDEO GIF.gif',
+    gifForm:'', gifAssessment:'gifts/Evaluation Survey.gif',
+  },
+};
+
+let cur = null;
+
+function openMod(key) {
+  cur = key;
+  const m = DATA[key];
+  document.getElementById('m-icon').className    = 'ti ' + m.iconClass;
+  document.getElementById('m-title').textContent = m.title;
+  document.getElementById('m-desc').textContent  = m.desc;
+  document.getElementById('badge').textContent   = m.stage;
+  document.getElementById('badge').style.display = 'block';
+
+  const types = ['content','video','form','assessment'];
+  const gifs  = ['gifContent','gifVideo','gifForm','gifAssessment'];
+  const icons = ['ti-file-text','ti-player-play','ti-clipboard-list','ti-checkbox'];
+
+  types.forEach((t,i) => {
+    const el  = document.getElementById('rm-' + t);
+    const gif = m[gifs[i]];
+    el.innerHTML = gif
+      ? `<img src="${gif}" alt="${t}">`
+      : `<div class="placeholder"><i class="ti ${icons[i]}" aria-hidden="true"></i></div>`;
+  });
+
+  document.getElementById('pg-menu').classList.add('hidden');
+  document.getElementById('pg-module').classList.remove('hidden');
+  window.scrollTo(0,0);
+}
+
+function goBack() {
+  document.getElementById('pg-module').classList.add('hidden');
+  document.getElementById('pg-menu').classList.remove('hidden');
+  document.getElementById('badge').style.display = 'none';
+  window.scrollTo(0,0);
+}
+
+function goLink(type) {
+  if (!cur) return;
+  const url = DATA[cur][type];
+  if (url) window.open(url, '_blank');
+}
+
+/* ── EFECTO RIPPLE desde el centro ── */
+document.querySelectorAll('.mod-card').forEach(card => {
+  const drop = document.createElement('div');
+  drop.classList.add('drop-light');
+  card.appendChild(drop);
+
+  card.addEventListener('mouseenter', () => {
+    drop.classList.remove('rippling');
+    void drop.offsetWidth; /* fuerza reflow para reiniciar animación */
+    drop.classList.add('rippling');
+  });
+});
+
+</script>
+</body>
+</html>
